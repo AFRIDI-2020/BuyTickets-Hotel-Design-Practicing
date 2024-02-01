@@ -1,0 +1,60 @@
+{
+  "status":1,
+  "msg":"success",
+  "value":[
+  {
+    "id":0,
+    "name": "Rove At The Park",
+    "image": "https://images.bubbleup.com/width1920/quality35/mville2017/1-brand/1-margaritaville.com/gallery-media/220803-compasshotel-medford-pool-73868-1677873697.jpg",
+    "rating": 2,
+    "location": "Dubai Parks and Resorts, PO Box 119444, Dubai",
+    "fund-able": false,
+    "price": 93000
+  },
+  {
+    "id":1,
+    "name": "Dhaka Residencial",
+    "image": "https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg",
+    "rating": 3,
+    "location": "Uttara, Dhaka, Bangladesh",
+    "fund-able": true,
+    "price": 10000
+  },
+  {
+    "id":2,
+    "name": "America New Castle",
+    "image": "https://www.tajhotels.com/content/dam/luxury/hotels/Taj_Lands_End_Mumbai/images/4x3/R&S_WOGLI_Exterior-Master.jpg",
+    "rating": 3,
+    "location": "New York, USA",
+    "fund-able": false,
+    "price": 110000
+  },
+  {
+    "id":3,
+    "name": "Dubai Burz Khalifa",
+    "image": "https://www.princehotels.com/wp-content/uploads/2019/04/aboutslider3-1.jpg",
+    "rating": 5,
+    "location": "Dubai Parks, Dubai",
+    "fund-able": false,
+    "price": 220000
+  },
+  {
+    "id":4,
+    "name": "Cox's Bazar New Castle",
+    "image": "https://media.cntraveler.com/photos/65690469a8acf0883738022b/16:9/w_2560%2Cc_limit/Josun%2520Palace_1914%2520Lounge%2520&%2520Bar%25202.jpg",
+    "rating": 4,
+    "location": "Cox's Bazar, Bangladesh",
+    "fund-able": false,
+    "price": 56600
+  },
+  {
+    "id":5,
+    "name": "Bandarban Residential",
+    "image": "https://cdn.luxe.digital/media/20230830105642/most-expensive-hotels-luxe-digital.jpg",
+    "rating": 4,
+    "location": "Bandorban, Bangladesh",
+    "fund-able": true,
+    "price": 40000
+  }
+]
+}
