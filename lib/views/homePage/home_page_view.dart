@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:testing01/views/homePage/providers/home_page_provider.dart';
 import 'package:testing01/views/homePage/widgets/all_hotels_show.dart';
 import 'package:testing01/views/homePage/widgets/home_page_appbar.dart';
+import 'package:testing01/views/searchPage/search_page_view.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
@@ -29,10 +30,14 @@ class _HomePageViewState extends State<HomePageView> {
     final screenSize = MediaQuery.of(context).size;
     final homePageProvider = Provider.of<HomePageProvider>(context);
     return Scaffold(
-      appBar: homePageAppBar(homePageProvider),
+      appBar: homePageAppBar(homePageProvider, () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const SearchPageView()));
+      }),
       body: homePageProvider.dataLoading
           ? const Center(child: CircularProgressIndicator())
-          : AllHotels(homePageProvider: homePageProvider, screenSize: screenSize),
+          : AllHotels(
+              homePageProvider: homePageProvider, screenSize: screenSize),
     );
   }
 }

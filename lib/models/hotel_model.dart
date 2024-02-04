@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'hotel_value.dart';
+
 HotelModel hotelModelFromJson(String str) =>
     HotelModel.fromJson(json.decode(str));
 
@@ -12,7 +14,7 @@ String hotelModelToJson(HotelModel data) => json.encode(data.toJson());
 class HotelModel {
   int? status;
   String? msg;
-  List<Value>? value;
+  List<HotelValue>? value;
 
   HotelModel({
     this.status,
@@ -23,7 +25,7 @@ class HotelModel {
   HotelModel copyWith({
     int? status,
     String? msg,
-    List<Value>? value,
+    List<HotelValue>? value,
   }) =>
       HotelModel(
         status: status ?? this.status,
@@ -36,7 +38,7 @@ class HotelModel {
         msg: json["msg"],
         value: json["value"] == null
             ? []
-            : List<Value>.from(json["value"]!.map((x) => Value.fromJson(x))),
+            : List<HotelValue>.from(json["value"]!.map((x) => HotelValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,61 +50,3 @@ class HotelModel {
       };
 }
 
-class Value {
-  int? id;
-  String? name;
-  String? image;
-  int? rating;
-  String? location;
-  bool? fundAble;
-  int? price;
-
-  Value({
-    this.id,
-    this.name,
-    this.image,
-    this.rating,
-    this.location,
-    this.fundAble,
-    this.price,
-  });
-
-  Value copyWith({
-    int? id,
-    String? name,
-    String? image,
-    int? rating,
-    String? location,
-    bool? fundAble,
-    int? price,
-  }) =>
-      Value(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        image: image ?? this.image,
-        rating: rating ?? this.rating,
-        location: location ?? this.location,
-        fundAble: fundAble ?? this.fundAble,
-        price: price ?? this.price,
-      );
-
-  factory Value.fromJson(Map<String, dynamic> json) => Value(
-        id: json["id"],
-        name: json["name"],
-        image: json["image"],
-        rating: json["rating"],
-        location: json["location"],
-        fundAble: json["fund-able"],
-        price: json["price"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "image": image,
-        "rating": rating,
-        "location": location,
-        "fund-able": fundAble,
-        "price": price,
-      };
-}
