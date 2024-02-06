@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:testing01/views/settingsPage/setting_page_view.dart';
 import '../providers/home_page_provider.dart';
-import 'appbar_title_section.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-AppBar homePageAppBar(HomePageProvider homePageProvider, Function() onTap, BuildContext context, double textAreaWidth) {
+AppBar homePageAppBar(HomePageProvider homePageProvider, Function() onTap,
+    BuildContext context, double textAreaWidth) {
   return AppBar(
     leading: IconButton(
       icon: const Icon(Icons.settings),
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> const SettingsPageView()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const SettingsPageView()));
       },
     ),
-    title: AppBarTitleSection(
-      titleValue: homePageProvider.appbarFilesModel.location!,
-      subTitleValue: '${homePageProvider.appbarFilesModel.bookingDate}, ${homePageProvider.appbarFilesModel.durationStaying} | ${homePageProvider.appbarFilesModel.nightCount} Nights | ${homePageProvider.appbarFilesModel.roomCount} Room, ${homePageProvider.appbarFilesModel.adultCount} Adult',
+    title: const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "titleValue",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ),
+        Text(
+          "subTitleValue",
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.white70,
+          ),
+        ),
+      ],
     ),
     bottom: PreferredSize(
       // preferredSize: const Size.fromHeight(kToolbarHeight + 60),
@@ -30,11 +46,16 @@ AppBar homePageAppBar(HomePageProvider homePageProvider, Function() onTap, Build
           ),
           child: Row(
             children: [
-              const Icon(Icons.search, color: Colors.grey,),
+              const Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
               const SizedBox(width: 10),
               SizedBox(
-                width: textAreaWidth,
-                  child: Text(AppLocalizations.of(context)!.searchHintLocale, style: const TextStyle(color: Colors.grey), overflow: TextOverflow.ellipsis)),
+                  width: textAreaWidth,
+                  child: Text(AppLocalizations.of(context)!.searchHintLocale,
+                      style: const TextStyle(color: Colors.grey),
+                      overflow: TextOverflow.ellipsis)),
             ],
           ),
         ),

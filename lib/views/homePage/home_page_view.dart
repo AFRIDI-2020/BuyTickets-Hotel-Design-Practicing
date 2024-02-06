@@ -6,7 +6,6 @@ import 'package:testing01/views/homePage/providers/home_page_provider.dart';
 import 'package:testing01/views/homePage/widgets/all_hotels_show.dart';
 import 'package:testing01/views/homePage/widgets/home_page_appbar.dart';
 import 'package:testing01/views/searchPage/search_page_view.dart';
-import 'package:testing01/views/settingsPage/setting_page_view.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
@@ -70,8 +69,7 @@ class _HomePageViewState extends State<HomePageView> {
         ),
         body: homePageProvider.dataLoading
             ? const Center(child: CircularProgressIndicator())
-            : AllHotels(
-                homePageProvider: homePageProvider, screenSize: screenSize),
+            : const AllHotels(),
       ),
     );
   }

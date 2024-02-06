@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:testing01/views/homePage/providers/home_page_provider.dart';
-import 'package:testing01/views/homePage/widgets/searchbar.dart';
 import 'package:testing01/views/hotelDetailsPage/hotel_details_page_view.dart';
 import 'package:testing01/views/searchPage/providers/search_page_provider.dart';
 
@@ -14,88 +13,118 @@ class SearchPageView extends StatefulWidget {
 }
 
 class _SearchPageViewState extends State<SearchPageView> {
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final searchPageProvider = Provider.of<SearchPageProvider>(context);
     final homePageProvider = Provider.of<HomePageProvider>(context);
-    final screenSize = MediaQuery.of(context).size;
+    final searchPageProvider = Provider.of<SearchPageProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const SearchBarWidget(),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: TextField(
+              controller: searchController,
+              autofocus: true,
+              textAlignVertical: TextAlignVertical.center,
+              onChanged: (value) {
+                searchPageProvider.searchingItems(
+                    searchText: value,
+                    hotelList: homePageProvider.hotels.value!);
+              },
+              decoration: const InputDecoration(
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search By Hotel Name / Area',
+                hintStyle: TextStyle(color: Colors.grey),
+              ),
+            ),
+          ),
+        ),
       ),
-      body: searchPageProvider.searchList == null
+      body: searchPageProvider.searchList.isEmpty
           ? const Center(
               child: Text(
                 'Search Items',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 20),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                    fontSize: 20),
               ),
             )
           : ListView.builder(
-            itemCount: searchPageProvider.searchList.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> HotelDetailsPageView(hotelValue: searchPageProvider.searchList[index])));
-                },
-                child: Column(
-                  children: [
-                    ListTile(
-                      // leading: const Icon(Icons.house),
-                      leading: SizedBox(
-                        height: 100,
-                        width: 80,
-                        child: Image.network(
-                          searchPageProvider.searchList[index].image
-                              .toString(),
-                          fit: BoxFit.fill,
+              itemCount: searchPageProvider.searchList.length,
+              itemBuilder: (context, index) {
+                final searchItem = searchPageProvider.searchList[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HotelDetailsPageView(hotelValue: searchItem)));
+                  },
+                  child: Column(
+                    children: [
+                      ListTile(
+                        // leading: const Icon(Icons.house),
+                        leading: SizedBox(
+                          height: 100,
+                          width: 80,
+                          child: Image.network(
+                            searchItem.image.toString(),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        title: Text('${searchItem.name}'),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${searchItem.location}'),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'BDT: ${searchItem.price}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue),
+                                ),
+                                RatingBar.builder(
+                                  itemSize: 20,
+                                  itemCount: 5,
+                                  initialRating: searchItem.rating!.toDouble(),
+                                  itemBuilder: (context, index) {
+                                    return const Icon(
+                                      Icons.star,
+                                      color: Colors.red,
+                                      size: 15,
+                                    );
+                                  },
+                                  onRatingUpdate: (double value) {},
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      title: Text(
-                          '${searchPageProvider.searchList[index].name}'),
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              '${searchPageProvider.searchList[index].location}'),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'BDT: ${searchPageProvider.searchList[index].price}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue),
-                              ),
-                              RatingBar.builder(
-                                itemSize: 20,
-                                itemCount: 5,
-                                initialRating: searchPageProvider
-                                    .searchList![index].rating!
-                                    .toDouble(),
-                                itemBuilder: (context, index) {
-                                  return const Icon(
-                                    Icons.star,
-                                    color: Colors.red,
-                                    size: 15,
-                                  );
-                                },
-                                onRatingUpdate: (double value) {},
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                  ],
-                ),
-              );
-            },
-          ),
+                      const Divider(),
+                    ],
+                  ),
+                );
+              },
+            ),
     );
   }
 }

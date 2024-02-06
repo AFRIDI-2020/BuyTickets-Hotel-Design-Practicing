@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:testing01/utils/themes/app_theme.dart';
 import 'package:testing01/views/homePage/home_page_view.dart';
 import 'package:testing01/views/homePage/providers/home_page_provider.dart';
-import 'package:testing01/views/searchPage/providers/search_page_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
@@ -20,7 +19,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomePageProvider()),
-        ChangeNotifierProvider(create: (_) => SearchPageProvider()),
       ],
       child: Consumer<HomePageProvider>(
         builder: (context, provider, child) {

@@ -1,47 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:testing01/views/homePage/widgets/total_hotel_number.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import '../../hotelDetailsPage/hotel_details_page_view.dart';
 import '../providers/home_page_provider.dart';
-import 'hotel_fund_price.dart';
 import 'hotel_image.dart';
-import 'hotel_location.dart';
-import 'hotel_name_rate.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllHotels extends StatelessWidget {
-  const AllHotels({
-    super.key,
-    required this.homePageProvider,
-    required this.screenSize,
-  });
-
-  final HomePageProvider homePageProvider;
-  final Size screenSize;
+  const AllHotels({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ===========================>
-            // Total Hotel Number Showing
-            // ===========================>
-            HotelNumber(hotelNumber: homePageProvider.hotels.value!.length),
-            // ===========================>
-            // All Hotel Showing
-            // ===========================>
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
+    final screenSize = MediaQuery.of(context).size;
+    final homePageProvider = Provider.of<HomePageProvider>(context);
+    final allHotels = homePageProvider.hotels.value;
+    final localization = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /*--------------> Hotels Number <----------------*/
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3),
+            child: Text(
+                '${allHotels!.length} ${localization!.hotelAvailableLocale}'),
+          ),
+          /*----------------> Hotel List <----------------*/
+          Expanded(
+            child: ListView.builder(
               itemCount: homePageProvider.hotels.value!.length,
               itemBuilder: (context, index) {
+                final hotelItem = homePageProvider.hotels.value![index];
                 return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> HotelDetailsPageView(hotelValue: homePageProvider.hotels.value![index])));
-
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HotelDetailsPageView(hotelValue: hotelItem)));
                   },
                   child: Card(
                     child: Padding(
@@ -49,41 +46,81 @@ class AllHotels extends StatelessWidget {
                           horizontal: 8.0, vertical: 5),
                       child: Column(
                         children: [
-                          // ===========================>
-                          // Total Image Showing
-                          // ===========================>
+                          /*----------------> Hotel Image <---------------*/
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: HotelImageLoading(
-                              screenHeight: screenSize.height * .3,
-                              screenWidth: screenSize.width,
-                              imgUrl: homePageProvider.hotels.value![index].image!,
+                            child: ImageHotel(
+                              imageHeight: screenSize.height * .3,
+                              imageWidth: screenSize.width,
+                              imgUrl: hotelItem.image!,
                             ),
                           ),
                           const SizedBox(height: 10),
-                          // ===========================>
-                          // Hotel Name Showing
-                          // ===========================>
-                          HotelNameAndRate(
-                            hotelName: homePageProvider.hotels.value![index].name!,
-                            rateValue: homePageProvider.hotels.value![index].rating!.toDouble(),
+                          /*---------------> Hotel Name and Rating <--------------*/
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                hotelItem.name!,
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              RatingBar.builder(
+                                itemSize: 20,
+                                itemCount: 5,
+                                initialRating: hotelItem.rating!.toDouble(),
+                                itemBuilder: (context, index) {
+                                  return const Icon(
+                                    Icons.star,
+                                    color: Colors.red,
+                                    size: 15,
+                                  );
+                                },
+                                onRatingUpdate: (double value) {},
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 5),
-                          // ===========================>
-                          // Hotel Location Showing
-                          // ===========================>
-                          HotelLocation(
-                            containerWidth: screenSize.width * .75,
-                            hotelLocation: homePageProvider.hotels.value![index].location!,
+                          /*---------------> Hotel Location <-------------*/
+                          Row(
+                            children: [
+                              const Icon(Icons.location_on),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  hotelItem.location!,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 5),
-                          // ===========================>
-                          // Hotel Fund and Price Showing
-                          // ===========================>
-                          HotelFundAndPrice(
-                            hotelFundValue: homePageProvider.hotels.value![index].fundAble!,
-                            hotelPriceValue: '${AppLocalizations.of(context)!.currencyLocale} ${homePageProvider.hotels.value![index].price}',
-                          )
+                          /*------------------> Hotel Fund and Price <------------------*/
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                hotelItem.fundAble!
+                                    ? AppLocalizations.of(context)!.fundLocale
+                                    : AppLocalizations.of(context)!
+                                        .nonFundLocale,
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                hotelItem.price.toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -91,8 +128,8 @@ class AllHotels extends StatelessWidget {
                 );
               },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
