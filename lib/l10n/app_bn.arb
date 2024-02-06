@@ -1,0 +1,17 @@
+{
+    "settingsLocale":	"সেটিংস",
+    "themeLocale":	"ডার্ক থিম",
+    "languagesLocale":	"ভাষা",
+    "searchHintLocale":	"হোটেলের নাম / এলাকা দ্বারা অনুসন্ধান করুন",
+    "hotelAvailableLocale":	"উপলভ্য হোটেল",
+    "nonFundLocale":	"অফেরতযোগ্য",
+    "fundLocale":	"ফেরতযোগ্য",
+    "currencyLocale":	"টাকা",
+    "priceLocale":	"দাম",
+    "rateLocale":	"রেটিং",
+    "bookLocale":	"বুক",
+    "detailsLocale":	"বিস্তারিত",
+    "bookNowLocale":	"এখনই বুক করুন",
+    "nullContentLocale":"কাজ চলছে, দয়া করে এড়িয়ে চলুন!"
+
+}

@@ -43,6 +43,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             errorBorder: InputBorder.none,
             prefixIcon: Icon(Icons.search),
             hintText: 'Search By Hotel Name / Area',
+            hintStyle: TextStyle(color: Colors.grey),
           ),
         ),
       ),
@@ -55,6 +56,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 
     if (searchController.text.isEmpty) {
       searchPageProvider.setSearchValues(hotels: homePageProvider.hotels.value!);
+      searchController.clear();
     } else {
       searchPageProvider.clearSearchItems();
       for (var element in homePageProvider.hotels.value!) {

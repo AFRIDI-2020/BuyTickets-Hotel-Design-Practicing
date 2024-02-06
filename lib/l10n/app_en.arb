@@ -1,0 +1,16 @@
+{
+    "settingsLocale":"Settings",
+    "themeLocale":"Dark Theme",
+    "languagesLocale":"Languages",
+    "searchHintLocale":"Search By Hotel Name / Area",
+    "hotelAvailableLocale":"Available Hotels",
+    "nonFundLocale":"Non Refundable",
+    "fundLocale":"Refundable",
+    "currencyLocale":"BDT",
+    "priceLocale":"Price",
+    "rateLocale":"Rating",
+    "bookLocale":"Book",
+    "detailsLocale":"Details",
+    "bookNowLocale":"Book Now",
+    "nullContentLocale":"Work In Progress, Please Avoid For Now!"
+}

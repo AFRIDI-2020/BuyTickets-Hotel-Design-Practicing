@@ -9,7 +9,7 @@ class DataHandle {
   static Future<HotelModel> fetchData() async {
     var jsonData = await rootBundle.loadString('assets/json/hotels_json.json');
     var data = await json.decode(jsonData);
-    HotelModel _hotelModel = HotelModel.fromJson(data);
-    return _hotelModel;
+    HotelModel hotelModel = HotelModel.fromJson(data);
+    return hotelModel;
   }
 }

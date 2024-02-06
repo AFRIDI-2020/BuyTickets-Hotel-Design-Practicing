@@ -1,0 +1,16 @@
+{
+    "settingsLocale": "समायोजन",
+    "themeLocale": "डार्क थीम",
+    "languagesLocale": "भाषाएँ",
+    "searchHintLocale": "होटल के नाम/क्षेत्र के आधार पर खोजें",
+    "hotelAvailableLocale": "उपलब्ध होटल",
+    "nonFundLocale": "नॉन रिफंडेबल",
+    "fundLocale": "वापसीयोग्य",
+    "currencyLocale": "रूपी",
+    "priceLocale": "कीमत",
+    "rateLocale": "रेटिंग",
+    "bookLocale": "बुक",
+    "detailsLocale": "विवरण",
+    "bookNowLocale": "अभी बुक करें",
+    "nullContentLocale":"कार्य प्रगति पर है, कृपया बचें!"
+}

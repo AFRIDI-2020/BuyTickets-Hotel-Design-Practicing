@@ -6,6 +6,7 @@ import 'hotel_fund_price.dart';
 import 'hotel_image.dart';
 import 'hotel_location.dart';
 import 'hotel_name_rate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllHotels extends StatelessWidget {
   const AllHotels({
@@ -28,7 +29,7 @@ class AllHotels extends StatelessWidget {
             // ===========================>
             // Total Hotel Number Showing
             // ===========================>
-            totalHotelNumber(homePageProvider),
+            HotelNumber(hotelNumber: homePageProvider.hotels.value!.length),
             // ===========================>
             // All Hotel Showing
             // ===========================>
@@ -51,22 +52,38 @@ class AllHotels extends StatelessWidget {
                           // ===========================>
                           // Total Image Showing
                           // ===========================>
-                          hotelImageLoading(screenSize, homePageProvider.hotels.value![index].image!),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: HotelImageLoading(
+                              screenHeight: screenSize.height * .3,
+                              screenWidth: screenSize.width,
+                              imgUrl: homePageProvider.hotels.value![index].image!,
+                            ),
+                          ),
                           const SizedBox(height: 10),
                           // ===========================>
                           // Hotel Name Showing
                           // ===========================>
-                          hotelNameAndRate(homePageProvider, index),
+                          HotelNameAndRate(
+                            hotelName: homePageProvider.hotels.value![index].name!,
+                            rateValue: homePageProvider.hotels.value![index].rating!.toDouble(),
+                          ),
                           const SizedBox(height: 5),
                           // ===========================>
                           // Hotel Location Showing
                           // ===========================>
-                          hotelLocation(screenSize, homePageProvider, index),
+                          HotelLocation(
+                            containerWidth: screenSize.width * .75,
+                            hotelLocation: homePageProvider.hotels.value![index].location!,
+                          ),
                           const SizedBox(height: 5),
                           // ===========================>
                           // Hotel Fund and Price Showing
                           // ===========================>
-                          hotelFundAndPrice(homePageProvider, index),
+                          HotelFundAndPrice(
+                            hotelFundValue: homePageProvider.hotels.value![index].fundAble!,
+                            hotelPriceValue: '${AppLocalizations.of(context)!.currencyLocale} ${homePageProvider.hotels.value![index].price}',
+                          )
                         ],
                       ),
                     ),

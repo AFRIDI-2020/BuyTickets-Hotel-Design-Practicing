@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:testing01/models/appbar_files_model.dart';
 
-class appBarTitleSection extends StatelessWidget {
-  const appBarTitleSection({super.key, required this.appbarFilesModel});
+class AppBarTitleSection extends StatelessWidget {
+  const AppBarTitleSection({super.key, required this.titleValue, required this.subTitleValue});
 
-  final AppbarFilesModel appbarFilesModel;
+  final String titleValue, subTitleValue;
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +12,14 @@ class appBarTitleSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          appbarFilesModel.location!,
+          titleValue,
           style: const TextStyle(
             fontSize: 18,
-            color: Colors.white70,
+            color: Colors.white,
           ),
         ),
         Text(
-          '${appbarFilesModel.bookingDate}, ${appbarFilesModel.durationStaying} | ${appbarFilesModel.nightCount} Nights | ${appbarFilesModel.roomCount} Room, ${appbarFilesModel.adultCount} Adult',
+          subTitleValue,
           style: const TextStyle(
             fontSize: 15,
             color: Colors.white70,

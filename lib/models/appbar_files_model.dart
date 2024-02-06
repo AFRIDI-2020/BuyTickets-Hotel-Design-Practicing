@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final appbarFilesModel = appbarFilesModelFromJson(jsonString);
-
 import 'dart:convert';
 
 AppbarFilesModel appbarFilesModelFromJson(String str) =>

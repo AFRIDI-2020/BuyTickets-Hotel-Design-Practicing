@@ -1,42 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:testing01/views/settingsPage/setting_page_view.dart';
 import '../providers/home_page_provider.dart';
 import 'appbar_title_section.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-PreferredSize homePageAppBar(HomePageProvider homePageProvider, Function() onTap) {
-  return PreferredSize(
-    preferredSize: const Size.fromHeight(kToolbarHeight + 60),
-    child: Container(
-      color: Colors.red,
-      child: Column(
-        children: [
-          AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {},
-            ),
-            title: appBarTitleSection(
-                appbarFilesModel: homePageProvider.appbarFilesModel),
+AppBar homePageAppBar(HomePageProvider homePageProvider, Function() onTap, BuildContext context, double textAreaWidth) {
+  return AppBar(
+    leading: IconButton(
+      icon: const Icon(Icons.settings),
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> const SettingsPageView()));
+      },
+    ),
+    title: AppBarTitleSection(
+      titleValue: homePageProvider.appbarFilesModel.location!,
+      subTitleValue: '${homePageProvider.appbarFilesModel.bookingDate}, ${homePageProvider.appbarFilesModel.durationStaying} | ${homePageProvider.appbarFilesModel.nightCount} Nights | ${homePageProvider.appbarFilesModel.roomCount} Room, ${homePageProvider.appbarFilesModel.adultCount} Adult',
+    ),
+    bottom: PreferredSize(
+      // preferredSize: const Size.fromHeight(kToolbarHeight + 60),
+      preferredSize: const Size.fromHeight(60),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          const SizedBox(height: 5),
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              child: const Row(
-                children: [
-                  Icon(Icons.search, color: Colors.grey,),
-                  SizedBox(width: 10),
-                  Text('Search By Hotel Name / Area', style: TextStyle(color: Colors.grey),),
-                ],
-              ),
-            ),
+          child: Row(
+            children: [
+              const Icon(Icons.search, color: Colors.grey,),
+              const SizedBox(width: 10),
+              SizedBox(
+                width: textAreaWidth,
+                  child: Text(AppLocalizations.of(context)!.searchHintLocale, style: const TextStyle(color: Colors.grey), overflow: TextOverflow.ellipsis)),
+            ],
           ),
-        ],
+        ),
       ),
     ),
   );
