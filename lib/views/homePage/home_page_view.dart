@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:testing01/controllers/alertDialouge/alert_dialouge.dart';
 import 'package:testing01/views/homePage/providers/home_page_provider.dart';
 import 'package:testing01/views/homePage/widgets/all_hotels_show.dart';
+import 'package:testing01/views/homePage/widgets/custom_appbar.dart';
 import 'package:testing01/views/homePage/widgets/home_page_appbar.dart';
 import 'package:testing01/views/searchPage/search_page_view.dart';
 
@@ -18,7 +19,8 @@ class _HomePageViewState extends State<HomePageView> {
   int count = 0;
 
   fetchingData() async {
-    final homePageProvider = Provider.of<HomePageProvider>(context, listen: false);
+    final homePageProvider =
+        Provider.of<HomePageProvider>(context, listen: false);
     await homePageProvider.setHotelsModel();
   }
 
@@ -50,23 +52,11 @@ class _HomePageViewState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     final homePageProvider = Provider.of<HomePageProvider>(context);
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) => popPressed(didPop),
       child: Scaffold(
-        appBar: homePageAppBar(
-          homePageProvider,
-          () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const SearchPageView()));
-          },
-          context,
-          screenSize.width * .7,
-        ),
         body: homePageProvider.dataLoading
             ? const Center(child: CircularProgressIndicator())
             : const AllHotels(),

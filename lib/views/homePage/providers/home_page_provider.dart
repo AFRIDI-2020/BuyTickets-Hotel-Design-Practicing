@@ -14,6 +14,8 @@ class HomePageProvider extends ChangeNotifier {
     nightCount: 10,
   );
 
+  List _searchList = [];
+
   String _localeId = 'en';
 
   bool _darkTheme = false;
@@ -32,6 +34,8 @@ class HomePageProvider extends ChangeNotifier {
 
   AppbarFilesModel get appbarFilesModel => _appBarFile;
 
+  List get searchList => _searchList;
+
   /*---------------> Assigning the variables <------------------*/
 
   void setLocale({required String value}) {
@@ -47,6 +51,16 @@ class HomePageProvider extends ChangeNotifier {
 
   void setTheme() {
     _darkTheme = !_darkTheme;
+    notifyListeners();
+  }
+
+  void searchingItems({required String searchText}) {
+    _searchList.clear();
+    _searchList = hotels.value!
+        .where((element) =>
+            element.name!.toLowerCase().contains(searchText) ||
+            element.location!.toLowerCase().contains(searchText))
+        .toList();
     notifyListeners();
   }
 }

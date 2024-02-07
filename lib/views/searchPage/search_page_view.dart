@@ -3,7 +3,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:testing01/views/homePage/providers/home_page_provider.dart';
 import 'package:testing01/views/hotelDetailsPage/hotel_details_page_view.dart';
-import 'package:testing01/views/searchPage/providers/search_page_provider.dart';
 
 class SearchPageView extends StatefulWidget {
   const SearchPageView({super.key});
@@ -18,40 +17,34 @@ class _SearchPageViewState extends State<SearchPageView> {
   @override
   Widget build(BuildContext context) {
     final homePageProvider = Provider.of<HomePageProvider>(context);
-    final searchPageProvider = Provider.of<SearchPageProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            child: TextField(
-              controller: searchController,
-              autofocus: true,
-              textAlignVertical: TextAlignVertical.center,
-              onChanged: (value) {
-                searchPageProvider.searchingItems(
-                    searchText: value,
-                    hotelList: homePageProvider.hotels.value!);
-              },
-              decoration: const InputDecoration(
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search By Hotel Name / Area',
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
+        title: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: TextField(
+            controller: searchController,
+            autofocus: true,
+            textAlignVertical: TextAlignVertical.center,
+            onChanged: (value) {
+              homePageProvider.searchingItems(searchText: value);
+            },
+            decoration: const InputDecoration(
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              prefixIcon: Icon(Icons.search),
+              hintText: 'Search By Hotel Name / Area',
+              hintStyle: TextStyle(color: Colors.grey),
             ),
           ),
         ),
       ),
-      body: searchPageProvider.searchList.isEmpty
+      body: homePageProvider.searchList.isEmpty
           ? const Center(
               child: Text(
                 'Search Items',
@@ -62,9 +55,9 @@ class _SearchPageViewState extends State<SearchPageView> {
               ),
             )
           : ListView.builder(
-              itemCount: searchPageProvider.searchList.length,
+              itemCount: homePageProvider.searchList.length,
               itemBuilder: (context, index) {
-                final searchItem = searchPageProvider.searchList[index];
+                final searchItem = homePageProvider.searchList[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
