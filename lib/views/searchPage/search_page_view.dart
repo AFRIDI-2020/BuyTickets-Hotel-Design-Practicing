@@ -17,6 +17,8 @@ class _SearchPageViewState extends State<SearchPageView> {
   @override
   Widget build(BuildContext context) {
     final homePageProvider = Provider.of<HomePageProvider>(context);
+    final hotelSearchItems =
+        homePageProvider.searchingItems(searchText: searchController.text);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -30,7 +32,7 @@ class _SearchPageViewState extends State<SearchPageView> {
             autofocus: true,
             textAlignVertical: TextAlignVertical.center,
             onChanged: (value) {
-              homePageProvider.searchingItems(searchText: value);
+              setState(() {});
             },
             decoration: const InputDecoration(
               focusedBorder: InputBorder.none,
@@ -44,7 +46,7 @@ class _SearchPageViewState extends State<SearchPageView> {
           ),
         ),
       ),
-      body: homePageProvider.searchList.isEmpty
+      body: hotelSearchItems.isEmpty
           ? const Center(
               child: Text(
                 'Search Items',
@@ -55,9 +57,9 @@ class _SearchPageViewState extends State<SearchPageView> {
               ),
             )
           : ListView.builder(
-              itemCount: homePageProvider.searchList.length,
+              itemCount: hotelSearchItems.length,
               itemBuilder: (context, index) {
-                final searchItem = homePageProvider.searchList[index];
+                final searchItem = hotelSearchItems[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(

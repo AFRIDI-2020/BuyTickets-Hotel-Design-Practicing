@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:testing01/controllers/data/data_handle.dart';
 import 'package:testing01/models/appbar_files_model.dart';
 import 'package:testing01/models/hotel_model.dart';
+import 'package:testing01/models/hotel_value.dart';
 
 class HomePageProvider extends ChangeNotifier {
   /*---------------> Setting up the variables <------------------*/
@@ -13,8 +14,6 @@ class HomePageProvider extends ChangeNotifier {
     durationStaying: '24 - 15 Feb, 24',
     nightCount: 10,
   );
-
-  List _searchList = [];
 
   String _localeId = 'en';
 
@@ -34,8 +33,6 @@ class HomePageProvider extends ChangeNotifier {
 
   AppbarFilesModel get appbarFilesModel => _appBarFile;
 
-  List get searchList => _searchList;
-
   /*---------------> Assigning the variables <------------------*/
 
   void setLocale({required String value}) {
@@ -54,13 +51,11 @@ class HomePageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void searchingItems({required String searchText}) {
-    _searchList.clear();
-    _searchList = hotels.value!
+  List<HotelValue> searchingItems({required String searchText}) {
+    return hotels.value!
         .where((element) =>
             element.name!.toLowerCase().contains(searchText) ||
             element.location!.toLowerCase().contains(searchText))
         .toList();
-    notifyListeners();
   }
 }

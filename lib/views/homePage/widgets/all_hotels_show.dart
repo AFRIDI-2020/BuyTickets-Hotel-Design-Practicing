@@ -22,6 +22,7 @@ class AllHotels extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        /*-------------------> Custom Appbar <-----------------*/
         CustomAppBar(
           showLeadingIcon: false,
           title: Column(
