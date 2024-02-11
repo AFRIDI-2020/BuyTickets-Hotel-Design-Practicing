@@ -2,7 +2,7 @@ import 'dart:core';
 import 'dart:core';
 
 import 'package:buy_tickets_list/widget/elevated_button_widget.dart';
-import 'package:buy_tickets_list/widget/hotel_info_card.dart';
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
 import 'package:flutter/material.dart';
 
 class BookingRoomScreen extends StatefulWidget {
@@ -40,16 +40,12 @@ class _BookingRoomScreenState extends State<BookingRoomScreen> {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            SingleChildScrollView(
+            /*SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: HotelInformationCardWidget(
-                hotelImage: widget.hotelImage,
-                hotelName: widget.hotelName,
-                hotelStarRating: widget.hotelStarRating,
-                hotelAddress: widget.hotelAddress,
-                price: widget.price,
+               hotel: ,
               ),
-            ),
+            ),*/
             Spacer(),
             SizedBox(
                 width: MediaQuery.of(context).size.width,

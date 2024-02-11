@@ -1,4 +1,4 @@
-import 'package:buy_tickets_list/screens/home_screen.dart';
+import 'package:buy_tickets_list/screens/home/home_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,8 +9,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
+    return const MaterialApp(
+      home: HomeView(),
     );
   }
 }

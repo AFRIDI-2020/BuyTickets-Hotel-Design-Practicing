@@ -1,36 +1,29 @@
+import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class HotelInformationCardWidget extends StatelessWidget {
-  final String hotelImage;
-  final String hotelName;
-  final double hotelStarRating;
-  final String hotelAddress;
-  final String price;
+class HotelListItem extends StatelessWidget {
+  final HotelDetail hotel;
 
-  const HotelInformationCardWidget(
-      {super.key,
-      required this.hotelImage,
-      required this.hotelName,
-      required this.hotelStarRating,
-      required this.hotelAddress,
-      required this.price});
+  const HotelListItem({
+    super.key,
+    required this.hotel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Hotel Image
           Image.network(
-            hotelImage,
+            hotel.hotelImage,
             height: MediaQuery.of(context).size.height / 2.6,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
+            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) return child;
               return const Center(
                 child: CircularProgressIndicator(),
@@ -51,18 +44,16 @@ class HotelInformationCardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      hotelName,
+                      hotel.hotelName,
                       style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w900),
+                          color: Colors.red, fontSize: 17, fontWeight: FontWeight.w900),
                     ),
                     const SizedBox(
                       width: 5,
                     ),
                     //hotel rating bar package
                     RatingBarIndicator(
-                      rating: hotelStarRating,
+                      rating: hotel.hotelRatingStar,
                       itemBuilder: (context, index) => const Icon(
                         Icons.star,
                         color: Colors.red,
@@ -85,7 +76,7 @@ class HotelInformationCardWidget extends StatelessWidget {
                       size: 18,
                     ),
                     Text(
-                      "${hotelAddress}",
+                      hotel.hotelAddress,
                       style: const TextStyle(fontSize: 13),
                     ),
                   ],
@@ -104,9 +95,8 @@ class HotelInformationCardWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${price}",
-                      style: const TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),
+                      "${hotel.price}",
+                      style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
