@@ -1,77 +1,62 @@
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:buy_tickets_list/network/network_requester.dart';
 import 'package:buy_tickets_list/screens/booking_room_screen.dart';
-import 'package:buy_tickets_list/widget/hotel_info_card.dart';
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
 import 'package:buy_tickets_list/widget/input_feild_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeViewState extends State<HomeView> {
   bool isLoading = false;
   HotelDetailsModel? _hotelDetailsModel;
+
   final searchBarController = TextEditingController();
 
   //call data
-  Future getAllHotelInformation() async {
+  Future _getAllHotelInformation() async {
     isLoading = true;
-    //get data function call
     final response = await NetworkRequester().getData();
     isLoading = false;
-
     _hotelDetailsModel = HotelDetailsModel.fromJson(response);
-    setState(() {
-
-    });
+    setState(() {});
     print(_hotelDetailsModel?.hotelDetails);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
+    _getAllHotelInformation();
     super.initState();
-    getAllHotelInformation();
-
   }
-
 
   //search function
-  List<HotelDetail> searchList(List<HotelDetail> newHotelInformation) {
-    return newHotelInformation
+  List<HotelDetail> searchList() {
+    if (searchBarController.text.isEmpty) {
+      return _hotelDetailsModel!.hotelDetails;
+    }
+    return _hotelDetailsModel!.hotelDetails
         .where((element) =>
-            element.hotelName
-                .toLowerCase()
-                .contains(searchBarController.text.toLowerCase()) ||
-            element.hotelAddress
-                .toLowerCase()
-                .contains(searchBarController.text.toLowerCase()))
+            element.hotelName.toLowerCase().startsWith(searchBarController.text.toLowerCase()) ||
+            element.hotelAddress.toLowerCase().startsWith(searchBarController.text.toLowerCase()))
         .toList();
-
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
-    final list =
-    searchList(_hotelDetailsModel?.hotelDetails ?? []);
-
-
+    final list = searchList();
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
         toolbarHeight: 130,
         title: Padding(
-          padding:
-              const EdgeInsets.only(top: 30.0, left: 5, right: 5, bottom: 20),
+          padding: const EdgeInsets.only(top: 30.0, left: 5, right: 5, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -82,8 +67,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 maxLines: 2,
                 style: TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 5,),
-              Text("01 Sep,24,-02 Sep 24| 1 Night|1 Room,1 Adult",style: TextStyle(color: Colors.white,fontSize: 15),),
+              const SizedBox(
+                height: 5,
+              ),
+              const Text(
+                "01 Sep,24,-02 Sep 24| 1 Night|1 Room,1 Adult",
+                style: TextStyle(color: Colors.white, fontSize: 15),
+              ),
               const SizedBox(
                 height: 5,
               ),
@@ -91,12 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
               //form feild widget
               TextFormField(
                 onChanged: (value) {
-                  setState(() {
-                  });
-                  // print("aaaaaaaaaaaaaaaaaaaaa ${newHotelInformation}");
+                  setState(() {});
                 },
                 controller: searchBarController,
-                //text form feild decoration widget
                 decoration: InputFeildDecoration(),
               )
               // SizedBox(height:,)
@@ -104,25 +91,19 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
-      body:list.isEmpty && searchBarController.text.isNotEmpty
+      body: isLoading
           ? const Center(
-              child: Text(
-              "No Data Found",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ))
-          :
-          // searchBarController.text.isNotEmpty && newHotelInformation.length.is ?Center(child: Text("No Data Found"),) :
-          isLoading
+              child: CircularProgressIndicator(),
+            )
+          : list.isEmpty
               ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+                  child: Text(
+                  "No Data Found",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ))
               : ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) {
-                    final searchData = searchBarController.text.isNotEmpty;
-                    final result = _hotelDetailsModel?.hotelDetails;
-                    //hotel information card widget call
                     return InkWell(
                       onTap: () {
                         Navigator.push(
@@ -133,19 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       hotelName: list[index].hotelName,
                                       hotelAddress: list[index].hotelAddress,
                                       price: list[index].price.toString(),
-                                      hotelStarRating:
-                                          list[index].hotelRatingStar,
+                                      hotelStarRating: list[index].hotelRatingStar,
                                     )));
                       },
-                      child: HotelInformationCardWidget(
-                        hotelImage: list[index].hotelImage,
-                        hotelName: list[index].hotelName,
-                        hotelAddress: list[index].hotelAddress,
-                        price: list[index].price.toString(),
-                        hotelStarRating:
-                        list[index].hotelRatingStar,
-
-
+                      child: HotelListItem(
+                        hotel: list[index],
                       ),
                     );
                   }),
