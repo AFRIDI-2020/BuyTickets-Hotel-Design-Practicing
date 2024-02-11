@@ -1,6 +1,6 @@
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:buy_tickets_list/network/network_requester.dart';
-import 'package:buy_tickets_list/screens/booking_room_screen.dart';
+import 'package:buy_tickets_list/screens/hotel_details_screen.dart';
 import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
 import 'package:buy_tickets_list/widget/input_feild_decoration.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
   //search function
   List<HotelDetail> searchList() {
     if (searchBarController.text.isEmpty) {
-      return _hotelDetailsModel!.hotelDetails;
+      return _hotelDetailsModel?.hotelDetails ?? [];
     }
     return _hotelDetailsModel!.hotelDetails
         .where((element) =>
@@ -106,16 +106,11 @@ class _HomeViewState extends State<HomeView> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BookingRoomScreen(
-                                      hotelImage: list[index].hotelImage,
-                                      hotelName: list[index].hotelName,
-                                      hotelAddress: list[index].hotelAddress,
-                                      price: list[index].price.toString(),
-                                      hotelStarRating: list[index].hotelRatingStar,
-                                    )));
+                        //keybord hi
+                        FocusScope.of(context).unfocus();
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HotelDetailsScreen(list[index])));
+
                       },
                       child: HotelListItem(
                         hotel: list[index],

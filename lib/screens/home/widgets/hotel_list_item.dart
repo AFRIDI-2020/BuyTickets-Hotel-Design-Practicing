@@ -1,4 +1,5 @@
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -18,17 +19,15 @@ class HotelListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Hotel Image
-          Image.network(
-            hotel.hotelImage,
-            height: MediaQuery.of(context).size.height / 2.6,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) return child;
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+          CachedNetworkImage(
+            placeholder: (context, url) =>
+            Center(child: const CircularProgressIndicator()),
+            imageUrl:hotel.hotelImage ,
+
+              height: MediaQuery.of(context).size.height / 2.6,
+                width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+
           ),
           const SizedBox(
             height: 10,
