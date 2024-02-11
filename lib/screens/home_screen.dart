@@ -26,6 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
     isLoading = false;
 
     _hotelDetailsModel = HotelDetailsModel.fromJson(response);
+    setState(() {
+
+    });
     print(_hotelDetailsModel?.hotelDetails);
   }
 
@@ -65,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        toolbarHeight: 150,
+        toolbarHeight: 130,
         title: Padding(
           padding:
               const EdgeInsets.only(top: 30.0, left: 5, right: 5, bottom: 20),
@@ -79,6 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 maxLines: 2,
                 style: TextStyle(color: Colors.white),
               ),
+              SizedBox(height: 5,),
+              Text("01 Sep,24,-02 Sep 24| 1 Night|1 Room,1 Adult",style: TextStyle(color: Colors.white,fontSize: 15),),
               const SizedBox(
                 height: 5,
               ),

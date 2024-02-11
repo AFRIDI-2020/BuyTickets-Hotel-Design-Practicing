@@ -42,76 +42,79 @@ class HotelInformationCardWidget extends StatelessWidget {
           ),
           // SizedBox(width: 5,),
           //hotel name and rating of hotel
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    hotelName,
-                    style: const TextStyle(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      hotelName,
+                      style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w900),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    //hotel rating bar package
+                    RatingBarIndicator(
+                      rating: hotelStarRating,
+                      itemBuilder: (context, index) => const Icon(
+                        Icons.star,
                         color: Colors.red,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w900),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  //hotel rating bar package
-                  RatingBarIndicator(
-                    rating: hotelStarRating,
-                    itemBuilder: (context, index) => const Icon(
-                      Icons.star,
-                      color: Colors.red,
+                      ),
+                      itemCount: 5,
+                      itemSize: 25.0,
+                      direction: Axis.horizontal,
                     ),
-                    itemCount: 5,
-                    itemSize: 25.0,
-                    direction: Axis.horizontal,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              //hotel address
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.location_on,
-                    size: 18,
-                  ),
-                  Text(
-                    "${hotelAddress}",
-                    style: const TextStyle(fontSize: 13),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              // price section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Non Refound",
-                    style: TextStyle(
-                      color: Colors.red,
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                //hotel address
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      size: 18,
                     ),
-                  ),
-                  Text(
-                    "${price}",
-                    style: const TextStyle(
-                        color: Colors.blue, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 18,
-              )
-            ],
+                    Text(
+                      "${hotelAddress}",
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                // price section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Non Refound",
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                    Text(
+                      "${price}",
+                      style: const TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 18,
+                )
+              ],
+            ),
           )
         ],
       ),
