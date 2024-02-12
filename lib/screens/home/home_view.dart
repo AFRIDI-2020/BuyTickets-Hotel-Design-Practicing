@@ -1,10 +1,12 @@
+import 'package:buy_tickets_list/language_change/controller/language_change_controller.dart';
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:buy_tickets_list/network/network_requester.dart';
 import 'package:buy_tickets_list/screens/hotel_details_screen.dart';
-import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item_en.dart';
 import 'package:buy_tickets_list/widget/input_feild_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -12,6 +14,9 @@ class HomeView extends StatefulWidget {
   @override
   State<HomeView> createState() => _HomeViewState();
 }
+enum language{english,bangla}
+
+
 
 class _HomeViewState extends State<HomeView> {
   bool isLoading = false;
@@ -53,6 +58,33 @@ class _HomeViewState extends State<HomeView> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Consumer<LanguageChangeController>(builder: (context,provider,child){
+            return PopupMenuButton(
+                onSelected: (language item){
+                  if(language.english.name==item.name){
+                    provider.changeLanguage(Locale("en"));
+                  }else{
+
+                    provider.changeLanguage(Locale("bn"));
+                  }
+
+                },
+                itemBuilder: (BuildContext context)=><PopupMenuEntry<language>>[
+
+                  PopupMenuItem(
+                      value: language.english,
+                      child: Text("English")),
+                  PopupMenuItem(
+                      value: language.bangla,
+                      child: Text("Bangla")),
+
+                ]
+            );
+
+
+          })
+        ],
         backgroundColor: Colors.red,
         toolbarHeight: 130,
         title: Padding(
@@ -84,7 +116,7 @@ class _HomeViewState extends State<HomeView> {
                   setState(() {});
                 },
                 controller: searchBarController,
-                decoration: InputFeildDecoration(),
+                decoration: InputFeildDecoration(context),
               )
               // SizedBox(height:,)
             ],

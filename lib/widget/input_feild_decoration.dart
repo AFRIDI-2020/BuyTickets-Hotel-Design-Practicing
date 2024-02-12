@@ -1,10 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-InputDecoration InputFeildDecoration() {
+
+
+InputDecoration InputFeildDecoration(context) {
   return InputDecoration(
 
-      hintText: "Search by hotel name/area",
+      hintText:AppLocalizations.of(context)!.searchHint,
       prefixIcon: Icon(Icons.search),
       contentPadding: EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
 

@@ -3,7 +3,7 @@ import 'dart:core';
 
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:buy_tickets_list/widget/elevated_button_widget.dart';
-import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item_en.dart';
 import 'package:flutter/material.dart';
 
 class HotelDetailsScreen extends StatefulWidget {

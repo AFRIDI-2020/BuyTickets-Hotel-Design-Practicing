@@ -1,9 +1,16 @@
  {
     "CountryAddress":"Bangladesh",
     "HotelDetails":
+
     [
       {
+
+
         "ID": 1,
+        "HotelNameBn": "ঢাকা প্যালেস",
+        "HotelAddressBn": "123 মেইন স্ট্রিট, ঢাকা",
+        "priceBn": "১৫০০",
+
         "HotelName": "Dhaka Palace",
         "HotelImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/18/f8/ff/exterior.jpg?w=1200&h=-1&s=1",
         "HotelAddress": "123 Main Street, Dhaka",
