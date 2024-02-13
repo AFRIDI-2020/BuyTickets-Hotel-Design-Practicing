@@ -2,11 +2,13 @@ import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class HotelListItem extends StatelessWidget {
+
+class HotelListItemBn extends StatelessWidget {
   final HotelDetail hotel;
 
-  const HotelListItem({
+  const HotelListItemBn({
     super.key,
     required this.hotel,
   });
@@ -43,7 +45,7 @@ class HotelListItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      hotel.hotelName,
+                      hotel.hotelNameBn.toString(),
                       style: const TextStyle(
                           color: Colors.red, fontSize: 17, fontWeight: FontWeight.w900),
                     ),
@@ -75,7 +77,7 @@ class HotelListItem extends StatelessWidget {
                       size: 18,
                     ),
                     Text(
-                      hotel.hotelAddress,
+                      hotel.hotelAddressBn.toString(),
                       style: const TextStyle(fontSize: 13),
                     ),
                   ],
@@ -87,8 +89,8 @@ class HotelListItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Non Refound",
+                     Text(
+                      AppLocalizations.of(context)!.refoundPrice,
                       style: TextStyle(
                         color: Colors.red,
                       ),

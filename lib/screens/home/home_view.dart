@@ -1,12 +1,15 @@
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item_bn.dart';
 import 'package:buy_tickets_list/language_change/controller/language_change_controller.dart';
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:buy_tickets_list/network/network_requester.dart';
+import 'package:buy_tickets_list/screens/home/widgets/app_bar_pop_button.dart';
 import 'package:buy_tickets_list/screens/hotel_details_screen.dart';
-import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item_en.dart';
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
 import 'package:buy_tickets_list/widget/input_feild_decoration.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -16,9 +19,12 @@ class HomeView extends StatefulWidget {
 }
 enum language{english,bangla}
 
-
-
 class _HomeViewState extends State<HomeView> {
+  //for bangla translate decleare variable
+  String ra = 'en';
+
+
+
   bool isLoading = false;
   HotelDetailsModel? _hotelDetailsModel;
 
@@ -47,8 +53,12 @@ class _HomeViewState extends State<HomeView> {
     }
     return _hotelDetailsModel!.hotelDetails
         .where((element) =>
-            element.hotelName.toLowerCase().startsWith(searchBarController.text.toLowerCase()) ||
-            element.hotelAddress.toLowerCase().startsWith(searchBarController.text.toLowerCase()))
+            element.hotelName
+                .toLowerCase()
+                .startsWith(searchBarController.text.toLowerCase()) ||
+            element.hotelAddress
+                .toLowerCase()
+                .startsWith(searchBarController.text.toLowerCase()))
         .toList();
   }
 
@@ -56,46 +66,53 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final list = searchList();
 
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           Consumer<LanguageChangeController>(builder: (context,provider,child){
-            return PopupMenuButton(
-                onSelected: (language item){
-                  if(language.english.name==item.name){
-                    provider.changeLanguage(Locale("en"));
-                  }else{
+          return PopupMenuButton(
 
-                    provider.changeLanguage(Locale("bn"));
-                  }
+              iconColor: Colors.white,
+              onSelected: (language item){
+                if(language.english.name==item.name){
+                  ra="en";
 
-                },
-                itemBuilder: (BuildContext context)=><PopupMenuEntry<language>>[
+                  provider.changeLanguage(Locale("en"));
+                }else{
+                  ra="bn";
 
-                  PopupMenuItem(
-                      value: language.english,
-                      child: Text("English")),
-                  PopupMenuItem(
-                      value: language.bangla,
-                      child: Text("Bangla")),
+                  provider.changeLanguage(Locale("bn"));
+                }
 
-                ]
-            );
+              },
+              itemBuilder: (BuildContext context)=><PopupMenuEntry<language>>[
 
 
-          })
-        ],
+                PopupMenuItem(
+                    value: language.english,
+                    child: Text("English")),
+                PopupMenuItem(
+                    value: language.bangla,
+                    child: Text("Bangla")),
+
+              ]
+          );
+
+
+        })],
         backgroundColor: Colors.red,
         toolbarHeight: 130,
         title: Padding(
-          padding: const EdgeInsets.only(top: 30.0, left: 5, right: 5, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 30.0, left: 0, right: 0, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // SizedBox(height: 30,),
 
-              const Text(
-                "Bangladesh,Dhaka",
+              Text(
+                AppLocalizations.of(context)!.areaAllHotel,
                 maxLines: 2,
                 style: TextStyle(color: Colors.white),
               ),
@@ -136,18 +153,30 @@ class _HomeViewState extends State<HomeView> {
               : ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) {
+                    final countProvider = Provider.of<LanguageChangeController>(
+                        context,
+                        listen: false);
                     return InkWell(
-                      onTap: () {
-                        //keybord hi
-                        FocusScope.of(context).unfocus();
+                        onTap: () async {
+                          print("ttttttttttttttttt$ra");
 
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HotelDetailsScreen(list[index])));
+                          //keybord hi
+                          FocusScope.of(context).unfocus();
 
-                      },
-                      child: HotelListItem(
-                        hotel: list[index],
-                      ),
-                    );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ra == "bn"
+                                      ? HotelListItemBn(hotel: list[index])
+                                      : HotelDetailsScreen(list[index])));
+                          print(
+                              'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww$ra');
+                        },
+                        child: ra == "bn"
+                            ? HotelListItemBn(hotel: list[index])
+                            : HotelListItem(
+                                hotel: list[index],
+                              ));
                   }),
     );
   }

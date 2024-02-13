@@ -3,8 +3,10 @@ import 'dart:core';
 
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:buy_tickets_list/widget/elevated_button_widget.dart';
-import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item_en.dart';
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class HotelDetailsScreen extends StatefulWidget {
 final HotelDetail hotel;
@@ -24,26 +26,26 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.red,
         toolbarHeight: 110,
-        title: const Padding(
-          padding: EdgeInsets.only(top: 30.0, left: 5, right: 5, bottom: 20),
+        title:  Padding(
+          padding: const EdgeInsets.only(top: 30.0, left: 5, right: 5, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // SizedBox(height: 30,),
 
               Text(
-                "Bangladesh,Dhaka",
+                AppLocalizations.of(context)!.areaAllHotel,
                 maxLines: 2,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Text(
+              const Text(
                 "01 Sep,24,-02 Sep 24| 1 Night|1 Room,1 Adult",
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
 
@@ -52,24 +54,21 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            HotelListItem(hotel: widget.hotel),
+      body: Column(
+        children: [
+          HotelListItem(hotel: widget.hotel),
 
-            const Spacer(),
-            SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: ElevatedButtonWidget(
-                  text: 'Select Room',
-                  backgroundColor: Colors.red,
-                  onTap: () {},
-                  textColor: Colors.white,
-                ))
+          const Spacer(),
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButtonWidget(
+                text: AppLocalizations.of(context)!.bookingButtonText,
+                backgroundColor: Colors.red,
+                onTap: () {},
+                textColor: Colors.white,
+              ))
 
-          ],
-        ),
+        ],
       ),
     );
   }
