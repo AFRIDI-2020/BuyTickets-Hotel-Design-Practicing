@@ -70,37 +70,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Consumer<LanguageChangeController>(builder: (context,provider,child){
-          return PopupMenuButton(
-
-              iconColor: Colors.white,
-              onSelected: (language item){
-                if(language.english.name==item.name){
-                  ra="en";
-
-                  provider.changeLanguage(Locale("en"));
-                }else{
-                  ra="bn";
-
-                  provider.changeLanguage(Locale("bn"));
-                }
-
-              },
-              itemBuilder: (BuildContext context)=><PopupMenuEntry<language>>[
-
-
-                PopupMenuItem(
-                    value: language.english,
-                    child: Text("English")),
-                PopupMenuItem(
-                    value: language.bangla,
-                    child: Text("Bangla")),
-
-              ]
-          );
-
-
-        })],
+          ],
         backgroundColor: Colors.red,
         toolbarHeight: 130,
         title: Padding(
@@ -111,10 +81,46 @@ class _HomeViewState extends State<HomeView> {
             children: [
               // SizedBox(height: 30,),
 
-              Text(
-                AppLocalizations.of(context)!.areaAllHotel,
-                maxLines: 2,
-                style: TextStyle(color: Colors.white),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.areaAllHotel,
+                    maxLines: 2,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Consumer<LanguageChangeController>(builder: (context,provider,child){
+                    return PopupMenuButton(
+
+                        iconColor: Colors.white,
+                        onSelected: (language item){
+                          if(language.english.name==item.name){
+                            ra="en";
+
+                            provider.changeLanguage(Locale("en"));
+                          }else{
+                            ra="bn";
+
+                            provider.changeLanguage(Locale("bn"));
+                          }
+
+                        },
+                        itemBuilder: (BuildContext context)=><PopupMenuEntry<language>>[
+
+
+                          PopupMenuItem(
+                              value: language.english,
+                              child: Text("English")),
+                          PopupMenuItem(
+                              value: language.bangla,
+                              child: Text("Bangla")),
+
+                        ]
+                    );
+
+
+                  })
+                ],
               ),
               const SizedBox(
                 height: 5,
@@ -134,8 +140,8 @@ class _HomeViewState extends State<HomeView> {
                 },
                 controller: searchBarController,
                 decoration: InputFeildDecoration(context),
-              )
-              // SizedBox(height:,)
+              ),
+              SizedBox(height: 15,)
             ],
           ),
         ),
