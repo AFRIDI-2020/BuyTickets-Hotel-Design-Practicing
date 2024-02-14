@@ -2,11 +2,13 @@ import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class HotelListItem extends StatelessWidget {
+
+class HotelListItemEn extends StatelessWidget {
   final HotelDetail hotel;
 
-  const HotelListItem({
+  const HotelListItemEn({
     super.key,
     required this.hotel,
   });
@@ -21,7 +23,7 @@ class HotelListItem extends StatelessWidget {
           //Hotel Image
           CachedNetworkImage(
             placeholder: (context, url) =>
-            Center(child: const CircularProgressIndicator()),
+            const Center(child: CircularProgressIndicator()),
             imageUrl:hotel.hotelImage ,
 
               height: MediaQuery.of(context).size.height / 2.6,
@@ -87,9 +89,9 @@ class HotelListItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Non Refound",
-                      style: TextStyle(
+                     Text(
+                      AppLocalizations.of(context)!.refoundPrice,
+                      style: const TextStyle(
                         color: Colors.red,
                       ),
                     ),

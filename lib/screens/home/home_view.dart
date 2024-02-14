@@ -2,14 +2,14 @@ import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item_bn.dart';
 import 'package:buy_tickets_list/language_change/controller/language_change_controller.dart';
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:buy_tickets_list/network/network_requester.dart';
-import 'package:buy_tickets_list/screens/home/widgets/app_bar_pop_button.dart';
 import 'package:buy_tickets_list/screens/hotel_details_screen.dart';
-import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item.dart';
+import 'package:buy_tickets_list/screens/home/widgets/hotel_list_item_en.dart';
+import 'package:buy_tickets_list/widget/appBarWidget.dart';
+import 'package:buy_tickets_list/widget/elevated_button_widget.dart';
 import 'package:buy_tickets_list/widget/input_feild_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -17,13 +17,12 @@ class HomeView extends StatefulWidget {
   @override
   State<HomeView> createState() => _HomeViewState();
 }
-enum language{english,bangla}
+
+enum language { english, bangla }
 
 class _HomeViewState extends State<HomeView> {
   //for bangla translate decleare variable
   String ra = 'en';
-
-
 
   bool isLoading = false;
   HotelDetailsModel? _hotelDetailsModel;
@@ -66,11 +65,8 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final list = searchList();
 
-
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          ],
         backgroundColor: Colors.red,
         toolbarHeight: 130,
         title: Padding(
@@ -89,36 +85,30 @@ class _HomeViewState extends State<HomeView> {
                     maxLines: 2,
                     style: TextStyle(color: Colors.white),
                   ),
-                  Consumer<LanguageChangeController>(builder: (context,provider,child){
+                  Consumer<LanguageChangeController>(
+                      builder: (context, provider, child) {
                     return PopupMenuButton(
-
                         iconColor: Colors.white,
-                        onSelected: (language item){
-                          if(language.english.name==item.name){
-                            ra="en";
+                        onSelected: (language item) {
+                          if (language.english.name == item.name) {
+                            ra = "en";
 
                             provider.changeLanguage(Locale("en"));
-                          }else{
-                            ra="bn";
+                          } else {
+                            ra = "bn";
 
                             provider.changeLanguage(Locale("bn"));
                           }
-
                         },
-                        itemBuilder: (BuildContext context)=><PopupMenuEntry<language>>[
-
-
-                          PopupMenuItem(
-                              value: language.english,
-                              child: Text("English")),
-                          PopupMenuItem(
-                              value: language.bangla,
-                              child: Text("Bangla")),
-
-                        ]
-                    );
-
-
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<language>>[
+                              PopupMenuItem(
+                                  value: language.english,
+                                  child: Text("English")),
+                              PopupMenuItem(
+                                  value: language.bangla,
+                                  child: Text("Bangla")),
+                            ]);
                   })
                 ],
               ),
@@ -141,7 +131,9 @@ class _HomeViewState extends State<HomeView> {
                 controller: searchBarController,
                 decoration: InputFeildDecoration(context),
               ),
-              SizedBox(height: 15,)
+              SizedBox(
+                height: 15,
+              )
             ],
           ),
         ),
@@ -151,17 +143,15 @@ class _HomeViewState extends State<HomeView> {
               child: CircularProgressIndicator(),
             )
           : list.isEmpty
-              ? const Center(
+              ?  Center(
                   child: Text(
-                  "No Data Found",
+                  AppLocalizations.of(context)!.searchDataStatus,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ))
               : ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) {
-                    final countProvider = Provider.of<LanguageChangeController>(
-                        context,
-                        listen: false);
+                    (context, listen: false);
                     return InkWell(
                         onTap: () async {
                           print("ttttttttttttttttt$ra");
@@ -173,14 +163,23 @@ class _HomeViewState extends State<HomeView> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ra == "bn"
-                                      ? HotelListItemBn(hotel: list[index])
+                                      ? HotelListItemBn(
+                                          hotel: list[index],
+                                          //pass Elevated button 
+                                          button: ElevatedButtonWidget(
+                                            text: AppLocalizations.of(context)!
+                                                .bookingButtonText,
+                                            backgroundColor: Colors.red,
+                                            onTap: () {},
+                                            textColor: Colors.white,
+                                          ),
+                                          appBar:buildAppBar(context) ,
+                                        )
                                       : HotelDetailsScreen(list[index])));
-                          print(
-                              'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww$ra');
                         },
                         child: ra == "bn"
                             ? HotelListItemBn(hotel: list[index])
-                            : HotelListItem(
+                            : HotelListItemEn(
                                 hotel: list[index],
                               ));
                   }),

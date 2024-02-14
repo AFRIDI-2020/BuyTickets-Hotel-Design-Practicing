@@ -6,16 +6,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class HotelListItemBn extends StatelessWidget {
+  final AppBar ?appBar;
   final HotelDetail hotel;
+   final Widget? button;
 
   const HotelListItemBn({
     super.key,
-    required this.hotel,
+    required this.hotel, this.button, this.appBar,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return  Card(
+      elevation: 10,
       margin: const EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,12 +26,12 @@ class HotelListItemBn extends StatelessWidget {
           //Hotel Image
           CachedNetworkImage(
             placeholder: (context, url) =>
-            Center(child: const CircularProgressIndicator()),
+                Center(child: const CircularProgressIndicator()),
             imageUrl:hotel.hotelImage ,
 
-              height: MediaQuery.of(context).size.height / 2.6,
-                width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height / 2.6,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
 
           ),
           const SizedBox(
@@ -89,7 +92,7 @@ class HotelListItemBn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     Text(
+                    Text(
                       AppLocalizations.of(context)!.refoundPrice,
                       style: TextStyle(
                         color: Colors.red,
@@ -103,7 +106,14 @@ class HotelListItemBn extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 18,
+                ),
+                //spacer add if button have
+                button!=null?SizedBox(height: 250,):Text(""),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: button!=null? button:Text(""),
                 )
+
               ],
             ),
           )

@@ -2,7 +2,8 @@
   "searchHint": "Search Area/Hotel Name",
     "areaAllHotel":"Bangladesh,Dhaka",
     "refoundPrice":"Non Refound",
-    "bookingButtonText":"Select Room"
+    "bookingButtonText":"Select Room",
+    "searchDataStatus":"No Data Found"
 
 
 
