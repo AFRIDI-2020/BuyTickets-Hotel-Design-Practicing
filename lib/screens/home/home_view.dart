@@ -92,12 +92,14 @@ class _HomeViewState extends State<HomeView> {
                         onSelected: (language item) {
                           if (language.english.name == item.name) {
                             ra = "en";
-
                             provider.changeLanguage(Locale("en"));
-                          } else {
-                            ra = "bn";
 
+                          } else {
+                            ra="bn";
                             provider.changeLanguage(Locale("bn"));
+
+
+
                           }
                         },
                         itemBuilder: (BuildContext context) =>

@@ -1,11 +1,14 @@
+import 'package:buy_tickets_list/language_change/controller/language_change_controller.dart';
 import 'package:buy_tickets_list/model/hotel_details_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class HotelListItemEn extends StatelessWidget {
+
   final HotelDetail hotel;
 
   const HotelListItemEn({
@@ -13,8 +16,12 @@ class HotelListItemEn extends StatelessWidget {
     required this.hotel,
   });
 
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return Card(
       margin: const EdgeInsets.only(top: 15),
       child: Column(
@@ -24,7 +31,7 @@ class HotelListItemEn extends StatelessWidget {
           CachedNetworkImage(
             placeholder: (context, url) =>
             const Center(child: CircularProgressIndicator()),
-            imageUrl:hotel.hotelImage ,
+            imageUrl:hotel.hotelImage,
 
               height: MediaQuery.of(context).size.height / 2.6,
                 width: MediaQuery.of(context).size.width,
@@ -44,8 +51,8 @@ class HotelListItemEn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      hotel.hotelName,
+                    Text(hotel.hotelName.toString()
+                      ,
                       style: const TextStyle(
                           color: Colors.red, fontSize: 17, fontWeight: FontWeight.w900),
                     ),
